@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zafaron Restaurant — Toshkent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:      #faf7f2;
+      --bg2:     #f3ede3;
+      --dark:    #1c1208;
+      --brown:   #5c3d1e;
+      --amber:   #d47c2a;
+      --gold:    #e8a830;
+      --cream:   #fff9f0;
+      --muted:   #8a7060;
+      --red:     #c0392b;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Jost', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(92,61,30,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 70px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--dark); text-decoration: none; letter-spacing: 1px;
+    }
+    .nav-logo span { color: var(--amber); }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-reserve {
+      background: var(--amber); color: #fff;
+      font-size: 12px; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; padding: 10px 24px;
+      border-radius: 2px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-reserve:hover { background: var(--brown); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 70px; overflow: hidden;
+    }
+    .hero-left {
+      background: var(--dark);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 64px; position: relative; overflow: hidden;
+    }
+    /* decorative circle */
+    .hero-left::before {
+      content: '';
+      position: absolute; width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,124,42,0.12);
+      top: -100px; right: -200px;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,124,42,0.08);
+      bottom: -80px; left: -80px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--gold); font-size: 11px; letter-spacing: 4px;
+      text-transform: uppercase; margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 86px);
+      font-weight: 700; line-height: 1.0;
+      color: #fff; letter-spacing: -1px;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+    .hero-h1 em { color: var(--gold); font-style: italic; display: block; }
+    .hero-sub {
+      margin-top: 28px; font-size: 15px; line-height: 1.8;
+      color: rgba(255,255,255,0.45); max-width: 360px;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-actions {
+      margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .btn-gold {
+      display: inline-block; background: var(--gold); color: var(--dark);
+      font-weight: 500; font-size: 13px; letter-spacing: 1px;
+      text-transform: uppercase; padding: 16px 40px; border-radius: 2px;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(232,168,48,0.4); }
+    .btn-outline-light {
+      display: inline-block; background: transparent;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+      font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 16px 40px; border-radius: 2px; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-light:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Hero right — photo mosaic */
+    .hero-right {
+      background: var(--bg2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+    }
+    .himg {
+      overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+    }
+    .himg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(28,18,8,0.2));
+    }
+    .hi1 { background: linear-gradient(135deg, #c8a97a, #8b5e2a); }
+    .hi2 { background: linear-gradient(135deg, #2d1b0e, #5c3d1e); }
+    .hi3 { background: linear-gradient(135deg, #e8c98a, #c8a060); }
+    .hi4 { background: linear-gradient(135deg, #5c3d1e, #8b5e2a); }
+    .himg-label {
+      position: absolute; bottom: 16px; left: 16px;
+      font-size: 11px; color: rgba(255,255,255,0.8);
+      letter-spacing: 2px; text-transform: uppercase;
+      z-index: 1;
+    }
+
+    /* ── STRIP ── */
+    .strip {
+      background: var(--amber);
+      display: flex; gap: 0;
+    }
+    .strip-item {
+      flex: 1; padding: 28px 32px;
+      display: flex; align-items: center; gap: 16px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.2s;
+    }
+    .strip-item:hover { background: rgba(0,0,0,0.08); }
+    .strip-item:last-child { border-right: none; }
+    .strip-icon { font-size: 28px; }
+    .strip-text h4 { font-size: 15px; font-weight: 500; color: #fff; }
+    .strip-text p  { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+    /* ── SECTION BASE ── */
+    .sec { padding: 100px 7vw; }
+    .sec-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 20px;
+    }
+    .sec-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--amber); }
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -1px; max-width: 560px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--cream); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; margin-top: 64px;
+    }
+    .about-text p {
+      font-size: 16px; line-height: 1.85; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .about-nums {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 40px;
+    }
+    .about-num-card {
+      padding: 28px 24px;
+      border: 1px solid rgba(92,61,30,0.1);
+      border-radius: 4px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .about-num-card:hover { border-color: var(--amber); box-shadow: 0 4px 24px rgba(212,124,42,0.08); }
+    .anc-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px; font-weight: 700; color: var(--amber);
+      line-height: 1;
+    }
+    .anc-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    /* about visual */
+    .about-visual { position: relative; height: 520px; }
+    .av-main {
+      position: absolute; inset: 0;
+      border-radius: 4px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(145deg, #2d1b0e, #8b5e2a);
+    }
+    .av-main-emoji { font-size: 120px; opacity: 0.3; }
+    .av-main-text {
+      position: absolute; bottom: 32px; left: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 600; color: #fff;
+      font-style: italic;
+    }
+    .av-badge {
+      position: absolute; top: -20px; right: -20px;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--gold);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(232,168,48,0.4);
+    }
+    .av-badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px; font-weight: 700; color: var(--dark); line-height: 1;
+    }
+    .av-badge-text { font-size: 10px; color: var(--dark); letter-spacing: 1px; margin-top: 2px; }
+
+    /* ── MENU ── */
+    #menu { background: var(--bg); }
+    .menu-tabs {
+      display: flex; gap: 8px; margin: 48px 0 40px;
+      flex-wrap: wrap;
+    }
+    .mtab {
+      padding: 10px 28px; border-radius: 2px; cursor: pointer;
+      font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+      border: 1px solid rgba(92,61,30,0.15);
+      color: var(--muted); background: transparent;
+      transition: all 0.2s; font-family: 'Jost', sans-serif;
+    }
+    .mtab.active, .mtab:hover {
+      background: var(--amber); color: #fff; border-color: var(--amber);
+    }
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .menu-card {
+      background: var(--cream);
+      border-radius: 4px; overflow: hidden;
+      box-shadow: 0 2px 16px rgba(92,61,30,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(92,61,30,0.12); }
+    .menu-img {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px; position: relative;
+    }
+    .m1 { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+    .m2 { background: linear-gradient(135deg, #a8edea, #fed6b7); }
+    .m3 { background: linear-gradient(135deg, #ffeaa7, #dfe6e9); }
+    .m4 { background: linear-gradient(135deg, #fd79a8, #fdcb6e); }
+    .m5 { background: linear-gradient(135deg, #55efc4, #a8e6cf); }
+    .m6 { background: linear-gradient(135deg, #74b9ff, #a29bfe); }
+    .menu-body { padding: 24px 20px; }
+    .menu-cat {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 8px;
+    }
+    .menu-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .menu-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .menu-footer { display: flex; align-items: center; justify-content: space-between; }
+    .menu-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 700; color: var(--amber);
+    }
+    .menu-order {
+      background: var(--dark); color: #fff;
+      font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 8px 18px; border-radius: 2px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .menu-order:hover { background: var(--amber); }
+
+    /* ── SPECIAL ── */
+    .special-section {
+      background: var(--dark);
+      padding: 80px 7vw;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .special-section .sec-eyebrow { color: var(--gold); }
+    .special-section .sec-eyebrow::before { background: var(--gold); }
+    .special-section .sec-title { color: #fff; }
+    .special-section .sec-title em { color: var(--gold); font-style: italic; }
+    .special-text p { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 24px; max-width: 420px; }
+    .special-dishes {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .sd-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px; padding: 28px 24px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .sd-card:hover { border-color: rgba(232,168,48,0.4); background: rgba(232,168,48,0.04); }
+    .sd-emoji { font-size: 36px; margin-bottom: 16px; display: block; }
+    .sd-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 8px;
+    }
+    .sd-price { font-size: 13px; color: var(--gold); }
+
+    /* ── TESTIMONIALS ── */
+    #reviews { background: var(--bg2); }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 64px;
+    }
+    .review-card {
+      background: var(--cream); border-radius: 4px;
+      padding: 36px 32px;
+      box-shadow: 0 2px 16px rgba(92,61,30,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .review-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(92,61,30,0.1); }
+    .review-stars { color: var(--gold); font-size: 14px; margin-bottom: 20px; letter-spacing: 2px; }
+    .review-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-style: italic;
+      color: var(--dark); line-height: 1.6; margin-bottom: 24px;
+    }
+    .review-author { display: flex; align-items: center; gap: 14px; }
+    .review-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .ra1 { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+    .ra2 { background: linear-gradient(135deg, #a8edea, #81ecec); }
+    .ra3 { background: linear-gradient(135deg, #ffeaa7, #fdcb6e); }
+    .review-name { font-size: 14px; font-weight: 500; color: var(--dark); }
+    .review-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── RESERVATION ── */
+    #reservation {
+      background: linear-gradient(135deg, #2d1b0e 0%, #5c3d1e 100%);
+      padding: 100px 7vw;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .res-left .sec-eyebrow { color: var(--gold); }
+    .res-left .sec-eyebrow::before { background: var(--gold); }
+    .res-left .sec-title { color: #fff; }
+    .res-left p { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 24px; }
+    .res-info { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+    .res-info-item { display: flex; align-items: center; gap: 14px; }
+    .res-info-item span:first-child { font-size: 22px; }
+    .res-info-item span:last-child { font-size: 15px; color: rgba(255,255,255,0.6); }
+
+    .res-form { display: flex; flex-direction: column; gap: 16px; }
+    .res-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .res-input {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px; padding: 16px 20px;
+      color: #fff; font-family: 'Jost', sans-serif; font-size: 14px;
+      width: 100%; transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+    .res-input::placeholder { color: rgba(255,255,255,0.3); }
+    .res-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
+
+    /* ── CTA FOOTER ── */
+    .cta-bar {
+      background: var(--amber); padding: 60px 7vw;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+    }
+    .cta-bar h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px; font-weight: 700; color: #fff;
+    }
+    .cta-bar p { font-size: 15px; color: rgba(255,255,255,0.75); margin-top: 6px; }
+    .cta-bar-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-white {
+      display: inline-block; background: #fff; color: var(--amber);
+      font-weight: 600; font-size: 13px; letter-spacing: 1px;
+      text-transform: uppercase; padding: 16px 36px; border-radius: 2px;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.15); }
+    .btn-tg {
+      display: inline-block; background: #229ED9; color: #fff;
+      font-size: 13px; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; padding: 16px 36px; border-radius: 2px;
+      text-decoration: none; transition: transform 0.2s;
+    }
+    .btn-tg:hover { transform: translateY(-3px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); padding: 48px 7vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 700; color: #fff;
+    }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { color: rgba(255,255,255,0.4); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── WATERMARK ── */
+    .watermark {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 16px 7vw;
+      text-align: center;
+    }
+    .watermark p { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .watermark a { color: rgba(232,168,48,0.6); text-decoration: none; }
+    .watermark a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 360px; }
+      .about-grid, .special-section, #reservation { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { height: 320px; }
+      .menu-grid, .reviews-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width: 620px) {
+      .nav-links { display: none; }
+      .strip { flex-direction: column; }
+      .menu-grid, .reviews-grid, .special-dishes { grid-template-columns: 1fr; }
+      .res-row { grid-template-columns: 1fr; }
+      .cta-bar { text-align: center; justify-content: center; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Zafar<span>on</span></a>
+  <div class="nav-links">
+    <a href="#about">Biz haqimizda</a>
+    <a href="#menu">Menyu</a>
+    <a href="#reviews">Sharhlar</a>
+    <a href="#reservation">Bron</a>
+  </div>
+  <a href="#reservation" class="nav-reserve">Joyni Bron Qilish</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Toshkent • 2018 yildan</div>
+    <h1 class="hero-h1">
+      Milliy ta'm,
+      <em>Zamonaviy</em>
+      ruh
+    </h1>
+    <p class="hero-sub">
+      O'zbek oshxonasining eng yaxshi taomlarini zamonaviy muhitda tatib ko'ring. Har bir taom — usta qo'llarda tayyorlangan san'at asari.
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-gold">Menyuni Ko'rish</a>
+      <a href="#reservation" class="btn-outline-light">Joyni Bron Qilish</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="himg hi1">🍽️<span class="himg-label">Asosiy taomlar</span></div>
+    <div class="himg hi2">🫕<span class="himg-label">Milliy oshlar</span></div>
+    <div class="himg hi3">🥗<span class="himg-label">Salатlar</span></div>
+    <div class="himg hi4">☕<span class="himg-label">Ichimliklar</span></div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <span class="strip-icon">🕐</span>
+    <div class="strip-text"><h4>Ish vaqti</h4><p>09:00 — 23:00, Har kuni</p></div>
+  </div>
+  <div class="strip-item">
+    <span class="strip-icon">📍</span>
+    <div class="strip-text"><h4>Manzil</h4><p>Amir Temur shoh ko'chasi, 15</p></div>
+  </div>
+  <div class="strip-item">
+    <span class="strip-icon">📞</span>
+    <div class="strip-text"><h4>Telefon</h4><p>+998 97 313 46 07</p></div>
+  </div>
+  <div class="strip-item">
+    <span class="strip-icon">🅿️</span>
+    <div class="strip-text"><h4>Avtoturargoh</h4><p>Bepul, 50 o'rin</p></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="sec-eyebrow">Biz Haqimizda</div>
+  <h2 class="sec-title">Toshkentning eng iste'dodli oshpazlari</h2>
+  <div class="about-grid">
+    <div>
+      <div class="about-text">
+        <p>Zafaron restoran 2018 yilda tashkil etilgan bo'lib, biz o'zbek milliy oshxonasini zamonaviy uslubda taqdim etamiz. Har bir taomimiz toza mahsulotlar va an'anaviy retseptlar asosida tayyorlanadi.</p>
+        <p>Bizning maqsadimiz — har bir mehmonni o'zini uyidagidek his qilib, unutilmas ta'm tajribasini hadya etishdir.</p>
+      </div>
+      <div class="about-nums">
+        <div class="about-num-card">
+          <div class="anc-num">6+</div>
+          <div class="anc-label">Yillik tajriba</div>
+        </div>
+        <div class="about-num-card">
+          <div class="anc-num">80+</div>
+          <div class="anc-label">Taom turi</div>
+        </div>
+        <div class="about-num-card">
+          <div class="anc-num">500+</div>
+          <div class="anc-label">Kunlik mehmon</div>
+        </div>
+        <div class="about-num-card">
+          <div class="anc-num">4.9★</div>
+          <div class="anc-label">O'rtacha baho</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="av-main">
+        <span class="av-main-emoji">👨‍🍳</span>
+        <div class="av-main-text">"Har taom — bir hikoya"</div>
+      </div>
+      <div class="av-badge">
+        <div class="av-badge-num">#1</div>
+        <div class="av-badge-text">Toshkentda</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="sec" id="menu">
+  <div class="sec-eyebrow">Menyumiz</div>
+  <h2 class="sec-title">Eng sevimli taomlarimiz</h2>
+  <div class="menu-tabs">
+    <button class="mtab active">Barcha taomlar</button>
+    <button class="mtab">Asosiy taomlar</button>
+    <button class="mtab">Sho'rvalar</button>
+    <button class="mtab">Salatlar</button>
+    <button class="mtab">Ichimliklar</button>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-img m1">🍚</div>
+      <div class="menu-body">
+        <div class="menu-cat">Asosiy taom</div>
+        <div class="menu-name">Samarqand Oshi</div>
+        <div class="menu-desc">An'anaviy retsept asosida tayyorlangan, qo'zi go'shti bilan.</div>
+        <div class="menu-footer">
+          <div class="menu-price">35 000 so'm</div>
+          <a href="#reservation" class="menu-order">Buyurtma</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img m2">🫕</div>
+      <div class="menu-body">
+        <div class="menu-cat">Sho'rva</div>
+        <div class="menu-name">Mastava</div>
+        <div class="menu-desc">Guruch va sabzavotli to'yimli o'zbek sho'rvasi.</div>
+        <div class="menu-footer">
+          <div class="menu-price">22 000 so'm</div>
+          <a href="#reservation" class="menu-order">Buyurtma</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img m3">🥙</div>
+      <div class="menu-body">
+        <div class="menu-cat">Grill</div>
+        <div class="menu-name">Tandir Kabob</div>
+        <div class="menu-desc">Tandirda pishirilgan mol go'shti kebabi, limon va zira bilan.</div>
+        <div class="menu-footer">
+          <div class="menu-price">48 000 so'm</div>
+          <a href="#reservation" class="menu-order">Buyurtma</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img m4">🥗</div>
+      <div class="menu-body">
+        <div class="menu-cat">Salat</div>
+        <div class="menu-name">Achichuk</div>
+        <div class="menu-desc">Pomidor, piyoz va ko'k ismoloq bilan yangi salat.</div>
+        <div class="menu-footer">
+          <div class="menu-price">14 000 so'm</div>
+          <a href="#reservation" class="menu-order">Buyurtma</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img m5">🥟</div>
+      <div class="menu-body">
+        <div class="menu-cat">Milliy taom</div>
+        <div class="menu-name">Manti</div>
+        <div class="menu-desc">Bug'da pishirilgan qo'zi go'shtli manti, qatiq bilan.</div>
+        <div class="menu-footer">
+          <div class="menu-price">28 000 so'm</div>
+          <a href="#reservation" class="menu-order">Buyurtma</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img m6">☕</div>
+      <div class="menu-body">
+        <div class="menu-cat">Ichimlik</div>
+        <div class="menu-name">Ko'k Choy</div>
+        <div class="menu-desc">Farg'ona vodiysi choylaridan tayyorlangan aromatik ko'k choy.</div>
+        <div class="menu-footer">
+          <div class="menu-price">8 000 so'm</div>
+          <a href="#reservation" class="menu-order">Buyurtma</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIAL -->
+<div class="special-section">
+  <div class="special-text">
+    <div class="sec-eyebrow">Maxsus Taklif</div>
+    <h2 class="sec-title">Chef'ning <em>tavsiyalari</em></h2>
+    <p>Bosh oshpazimiz har kuni eng yangi va mazali taomlarni tavsiya etadi. Faqat bugun mavjud maxsus menyu.</p>
+  </div>
+  <div class="special-dishes">
+    <div class="sd-card">
+      <span class="sd-emoji">🫔</span>
+      <div class="sd-name">Dimlama</div>
+      <div class="sd-price">42 000 so'm</div>
+    </div>
+    <div class="sd-card">
+      <span class="sd-emoji">🍖</span>
+      <div class="sd-name">Qovurma</div>
+      <div class="sd-price">55 000 so'm</div>
+    </div>
+    <div class="sd-card">
+      <span class="sd-emoji">🥘</span>
+      <div class="sd-name">Lagʼmon</div>
+      <div class="sd-price">32 000 so'm</div>
+    </div>
+    <div class="sd-card">
+      <span class="sd-emoji">🍯</span>
+      <div class="sd-name">Halvo</div>
+      <div class="sd-price">18 000 so'm</div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="sec" id="reviews">
+  <div class="sec-eyebrow">Mijozlar Fikri</div>
+  <h2 class="sec-title">Ular nima deydi?</h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Toshkentdagi eng yaxshi osh shu yerda! Har safar kelganimda bir xil mazali. Xizmat ham a'lo darajada."</div>
+      <div class="review-author">
+        <div class="review-avatar ra1">👩</div>
+        <div>
+          <div class="review-name">Malika Yusupova</div>
+          <div class="review-date">2 hafta oldin</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Tandir kabob umrimda yegan eng mazali kabob edi. Muhit ham juda chiroyli, oila bilan kelishga ideal joy!"</div>
+      <div class="review-author">
+        <div class="review-avatar ra2">👨</div>
+        <div>
+          <div class="review-name">Jasur Toshmatov</div>
+          <div class="review-date">1 oy oldin</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Narx-sifat nisbati zo'r. Mantisi va ko'k choyi esimdan chiqmaydi. Albatta qayta kelaman!"</div>
+      <div class="review-author">
+        <div class="review-avatar ra3">👩</div>
+        <div>
+          <div class="review-name">Dilnoza Rahimova</div>
+          <div class="review-date">3 hafta oldin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <div class="res-left">
+    <div class="sec-eyebrow">Bron Qilish</div>
+    <h2 class="sec-title">Joy band qiling</h2>
+    <p>Maxsus kechalar, tug'ilgan kun va korporativ tadbirlar uchun joy oldindan band qilishingiz mumkin.</p>
+    <div class="res-info">
+      <div class="res-info-item"><span>📞</span><span>+998 97 313 46 07</span></div>
+      <div class="res-info-item"><span>✈️</span><span>@hawebsolutions1</span></div>
+      <div class="res-info-item"><span>📍</span><span>Amir Temur shoh ko'chasi, 15, Toshkent</span></div>
+      <div class="res-info-item"><span>🕐</span><span>Har kuni 09:00 — 23:00</span></div>
+    </div>
+  </div>
+  <div>
+    <div class="res-form">
+      <div class="res-row">
+        <input class="res-input" type="text" placeholder="Ismingiz"/>
+        <input class="res-input" type="tel" placeholder="Telefon raqam"/>
+      </div>
+      <div class="res-row">
+        <input class="res-input" type="date"/>
+        <input class="res-input" type="time"/>
+      </div>
+      <input class="res-input" type="number" placeholder="Mehmonlar soni" min="1"/>
+      <textarea class="res-input" rows="3" placeholder="Qo'shimcha izoh (ixtiyoriy)"></textarea>
+      <a href="tel:+998973134607" class="btn-gold" style="text-align:center; padding:18px;">📞 Bron Qilish</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAR -->
+<div class="cta-bar">
+  <div>
+    <h3>Siz ham shunday sahifa xohlaysizmi?</h3>
+    <p>HA Web Solutions — professional veb-saytlar yaratamiz. Arzon narxda, tez va sifatli.</p>
+  </div>
+  <div class="cta-bar-btns">
+    <a href="tel:+998973134607" class="btn-white">📞 Qo'ng'iroq</a>
+    <a href="https://t.me/hawebsolutions1" target="_blank" class="btn-tg">✈️ Telegram</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Zafar<span>on</span> Restaurant</div>
+  <div class="footer-links">
+    <a href="#about">Haqimizda</a>
+    <a href="#menu">Menyu</a>
+    <a href="#reviews">Sharhlar</a>
+    <a href="#reservation">Bron</a>
+  </div>
+  <p>© 2025 Zafaron. Barcha huquqlar himoyalangan.</p>
+</footer>
+
+<!-- WATERMARK -->
+<div class="watermark">
+  <p>Bu sahifa <a href="https://t.me/hawebsolutions1" target="_blank">HA Web Solutions</a> tomonidan namuna sifatida yaratilgan</p>
+</div>
+
+<script>
+  // Menu tabs
+  document.querySelectorAll('.mtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.menu-card, .review-card, .about-num-card, .sd-card, .himg').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
+
